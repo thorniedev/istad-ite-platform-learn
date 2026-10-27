@@ -1,0 +1,12 @@
+plugins {
+    id 'spring-common-conventions'
+    id 'spring-cloud-common-conventions'
+}
+
+dependencies {
+    implementation "kh.edu.istad:order-application-service"
+    implementation 'org.springframework.boot:spring-boot-starter-webclient'
+    implementation 'org.springframework.cloud:spring-cloud-starter-loadbalancer'
+    implementation 'com.github.ben-manes.caffeine:caffeine'
+    testImplementation 'io.projectreactor:reactor-test'
+}

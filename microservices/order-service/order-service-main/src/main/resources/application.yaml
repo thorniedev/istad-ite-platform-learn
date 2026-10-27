@@ -1,0 +1,22 @@
+server:
+  port: 9092
+
+spring:
+  application:
+    name: order-service
+
+  cloud:
+    consul:
+      host: 127.0.0.1
+      port: 8500
+      discovery:
+        health-check-url: http://host.docker.internal:${server.port}/actuator/health
+        ip-address: 127.0.0.1
+        prefer-ip-address: true
+        service-name: order-service
+        instance-id: ${spring.application.name}-${random.value}
+
+logging:
+  level:
+    io.netty.resolver.dns.DnsServerAddressStreamProviders: OFF
+
