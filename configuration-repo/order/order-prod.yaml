@@ -1,3 +1,0 @@
-service:
-  name: Order Service Production profile
-  version: 1.0-release
