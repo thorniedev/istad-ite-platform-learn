@@ -1,0 +1,3 @@
+rootProject.name = 'infrastructure'
+
+includeBuild 'config-server'

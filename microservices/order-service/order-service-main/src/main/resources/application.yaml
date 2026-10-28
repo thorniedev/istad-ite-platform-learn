@@ -1,9 +1,13 @@
-server:
-  port: 9092
+#server:
+#  port: 9092
 
 spring:
   application:
     name: order-service
+  config:
+    import: "optional:consul:"
+  profiles:
+    active: dev
 
   cloud:
     consul:
@@ -15,8 +19,24 @@ spring:
         prefer-ip-address: true
         service-name: order-service
         instance-id: ${spring.application.name}-${random.value}
+      config:
+        enabled: true
+        format: yaml
+        watch:
+          enabled: true
+          delay: 5000
+          wait-time: 15
 
-logging:
-  level:
-    io.netty.resolver.dns.DnsServerAddressStreamProviders: OFF
+  r2dbc:
+    url: r2dbc:postgresql://localhost:9543/order_db
+    username: iteuser
+    password: qwerqwer
 
+  liquibase:
+    enabled: true
+    drop-first: true
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+    url: jdbc:postgresql://localhost:9543/order_db
+    user: iteuser
+    password: qwerqwer
+    driver-class-name: org.postgresql.Driver

@@ -4,10 +4,9 @@ volumes:
 networks:
   ite-net:
     external: true
-
 services:
   consul-server:
-    image: hashicorp/consul:1.21.3
+    image: hashicorp/consul:2.0.2
     container_name: consul-server
     restart: always
     networks:

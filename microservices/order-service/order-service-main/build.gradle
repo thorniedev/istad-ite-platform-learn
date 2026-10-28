@@ -10,8 +10,14 @@ dependencies {
     implementation 'kh.edu.istad:order-application-service'
     implementation 'kh.edu.istad:order-service-persistence'
 
+    // Schema Migration (runs at startup via JDBC)
+    implementation 'org.springframework.boot:spring-boot-starter-liquibase'
+    runtimeOnly 'org.postgresql:postgresql'
+    runtimeOnly 'org.postgresql:r2dbc-postgresql'
+
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation 'org.springframework.cloud:spring-cloud-starter-consul-discovery'
+    implementation 'org.springframework.cloud:spring-cloud-starter-consul-config'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
 }
 

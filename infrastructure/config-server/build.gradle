@@ -1,0 +1,9 @@
+plugins {
+    id 'spring-cloud-common-conventions'
+}
+
+dependencies {
+
+    implementation 'org.springframework.cloud:spring-cloud-config-server'
+
+}

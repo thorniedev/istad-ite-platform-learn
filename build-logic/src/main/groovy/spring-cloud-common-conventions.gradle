@@ -1,7 +1,8 @@
 plugins {
     id 'spring-boot-common-conventions'
+    //id 'java-common-conventions'
+    //id 'io.spring.dependency-management'
 }
-
 
 ext {
     springCloudVersion = "2025.1.4"

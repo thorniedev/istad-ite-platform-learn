@@ -1,0 +1,15 @@
+server:
+  port: 8888
+spring:
+  application:
+    name: config-server
+  profiles:
+    active: native # (native) config server reads from local file system
+
+  cloud:
+    config:
+      server:
+        native:
+          search-locations:
+            - file:/Users/thornie/Documents/ITE-Gen3/advanced course/istad-ite-platform-learn/configuration-repo/
+            - file:/Users/thornie/Documents/ITE-Gen3/advanced course/istad-ite-platform-learn/configuration-repo/{application}/
