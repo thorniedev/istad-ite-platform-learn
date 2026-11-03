@@ -1,14 +1,14 @@
 package kh.edu.istad.platform.order.domain.port.out.client;
 
-import kh.edu.istad.platform.order.domain.dto.client.CustomerResponse;
+import kh.edu.istad.platform.order.domain.dto.client.QueryCustomerResult;
 import reactor.core.publisher.Flux;
 
 public interface CustomerServiceClient {
 
-    Flux<CustomerResponse> getCustomers();
+    Flux<QueryCustomerResult> getCustomers();
 
-    default Flux<String> getCustomerNames() {
-        return getCustomers().map(CustomerResponse::givenName);
-    }
+    Flux<QueryCustomerResult> getCustomerById(String id);
+
+    Flux<QueryCustomerResult> createCustomer(QueryCustomerResult result);
 
 }

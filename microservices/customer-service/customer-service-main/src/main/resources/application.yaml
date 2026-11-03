@@ -4,6 +4,14 @@ server:
 spring:
   application:
     name: customer-service
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9000
+
+  config:
+    import: "optional:consul:localhost:8500"
 
   cloud:
     consul:

@@ -1,11 +1,36 @@
-#server:
-#  port: 9092
+server:
+  port: 3000
 
 spring:
+  http:
+    serviceclient:
+      customers-service:
+          # If running with Consul: http://customer-service
+          # If running directly without Consul: http://localhost:9091
+          base-url: http://customer-service
+
+  security:
+    oauth2:
+      client:
+        registration:
+          customer-client:
+            provider: authorization-server
+            client-id: order-service-client
+            client-secret: secret123
+            authorization-grant-type: client_credentials
+            scope:
+              - customer.read
+              - customer.write
+        provider:
+          authorization-server:
+            issuer-uri: http://localhost:9000
+
   application:
     name: order-service
+
   config:
     import: "optional:consul:"
+
   profiles:
     active: dev
 
@@ -14,11 +39,15 @@ spring:
       host: 127.0.0.1
       port: 8500
       discovery:
-        health-check-url: http://host.docker.internal:${server.port}/actuator/health
+        service-name: order-service
+        instance-id: ${spring.application.name}:${server.port}
         ip-address: 127.0.0.1
         prefer-ip-address: true
-        service-name: order-service
-        instance-id: ${spring.application.name}-${random.value}
+        health-check-url: http://host.docker.internal:${server.port}/actuator/health
+        health-check-interval: 10s
+        health-check-critical-timeout: 1m
+        deregister: true
+
       config:
         enabled: true
         format: yaml
@@ -32,11 +61,16 @@ spring:
     username: iteuser
     password: qwerqwer
 
-  liquibase:
-    enabled: true
-    drop-first: true
-    change-log: classpath:db/changelog/db.changelog-master.yaml
-    url: jdbc:postgresql://localhost:9543/order_db
-    user: iteuser
-    password: qwerqwer
-    driver-class-name: org.postgresql.Driver
+logging:
+  level:
+    org.springframework.security.oauth2: DEBUG
+    org.springframework.web.reactive.function.client: DEBUG
+
+#  liquibase:
+#    enabled: true
+#    drop-first: true
+#    change-log: classpath:db/changelog/db.changelog-master.yaml
+#    url: jdbc:postgresql://localhost:9543/order_db
+#    user: iteuser
+#    password: qwerqwer
+#    driver-class-name: org.postgresql.Driver

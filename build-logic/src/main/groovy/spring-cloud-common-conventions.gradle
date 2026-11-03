@@ -1,15 +1,18 @@
 plugins {
     id 'spring-boot-common-conventions'
-    //id 'java-common-conventions'
-    //id 'io.spring.dependency-management'
 }
 
-ext {
-    springCloudVersion = "2025.1.4"
-}
+def libs = extensions.getByType(VersionCatalogsExtension).named("libs")
+
 
 dependencyManagement {
     imports {
-        mavenBom "org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion"
+        mavenBom(libs.findLibrary("spring-cloud-bom").get().get().toString())
     }
+}
+
+dependencies {
+
+    // Shared production monitoring & health checking
+    implementation libs.findLibrary('spring-boot-starter-actuator').get().get()
 }

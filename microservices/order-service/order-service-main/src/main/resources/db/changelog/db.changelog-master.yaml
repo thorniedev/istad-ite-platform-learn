@@ -2,8 +2,6 @@ databaseChangeLog:
   # Base DDL
   - include:
       file: db/changelog/ddl/changelog-0001.sql
-  - include:
-      file: db/changelog/ddl/changelog-0002.sql
 
   # Existing Data
   - include:

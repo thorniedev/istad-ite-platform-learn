@@ -6,26 +6,35 @@ plugins {
 group = 'kh.edu.istad'
 version = '1.0.0'
 
+def libs = extensions.getByType(VersionCatalogsExtension).named("libs")
+
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(25)
+        libs.findVersion('java-version').get().requiredVersion.toInteger()
     }
 }
 
 dependencyManagement {
     imports {
-        mavenBom 'org.springframework.boot:spring-boot-dependencies:4.1.1'
+        mavenBom(libs.findLibrary("spring-boot-bom").get().get().toString())
     }
 }
 
 dependencies {
-    annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
-    annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
-    compileOnly 'org.mapstruct:mapstruct:1.6.3'
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
-    implementation 'org.springframework.boot:spring-boot-starter-logging'
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    // Lombok
+    compileOnly libs.findLibrary('lombok').get().get()
+    annotationProcessor libs.findLibrary('lombok').get().get()
+
+    // mapstruct
+    compileOnly libs.findLibrary('mapstruct').get().get()
+    libs.findBundle('mapstruct').get().get().forEach { dep ->
+        annotationProcessor dep
+    }
+
+    // Base Spring logging and validation
+    implementation libs.findLibrary('spring-boot-starter-logging').get().get()
+    implementation libs.findLibrary('spring-boot-starter-validation').get().get()
 }
 
 tasks.withType(Test).configureEach {

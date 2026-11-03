@@ -39,7 +39,15 @@ bin/
 ### VS Code ###
 .vscode/
 
+project_tree.png
+project_tree.txt
+
 ### Mac OS ###
 .DS_Store
 
 /configuration-repo/
+
+# Local environment credentials
+*.local
+env.sh
+.envenv.sh

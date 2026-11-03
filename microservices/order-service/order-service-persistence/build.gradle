@@ -1,3 +1,4 @@
+// persistence gradle
 plugins {
     id 'spring-common-conventions'
 }
@@ -6,10 +7,20 @@ dependencies {
     api 'kh.edu.istad:order-application-service'
 
     //
-    implementation 'org.springframework.boot:spring-boot-starter-r2dbc'
-
-//    implementation 'org.springframework.boot:spring-boot-starter-liquibase'
 //    implementation 'org.springframework.boot:spring-boot-starter-r2dbc'
-//    runtimeOnly 'org.postgresql:postgresql'
+//    implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
 //    runtimeOnly 'org.postgresql:r2dbc-postgresql'
+//
+//    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+//    testImplementation 'org.springframework.boot:spring-boot-test-autoconfigure'
+//    testImplementation 'io.projectreactor:reactor-test'
+
+
+    // Use only data-r2dbc
+    implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
+    runtimeOnly 'org.postgresql:r2dbc-postgresql'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.boot:spring-boot-test-autoconfigure'
+    testImplementation 'io.projectreactor:reactor-test'
 }

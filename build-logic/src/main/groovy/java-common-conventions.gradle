@@ -5,9 +5,12 @@ plugins {
 group = 'kh.edu.istad'
 version = '1.0.0'
 
+def libs = extensions.getByType(VersionCatalogsExtension)
+        .named("libs")
+
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(25)
+        libs.findVersion('java-version').get().requiredVersion.toInteger()
     }
 }
 

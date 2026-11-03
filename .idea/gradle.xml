@@ -15,11 +15,9 @@
               <build path="$PROJECT_DIR$/infrastructure" name="infrastructure">
                 <projects>
                   <project path="$PROJECT_DIR$/infrastructure" />
-                </projects>
-              </build>
-              <build path="$PROJECT_DIR$/infrastructure/config-server" name="config-server">
-                <projects>
                   <project path="$PROJECT_DIR$/infrastructure/config-server" />
+                  <project path="$PROJECT_DIR$/infrastructure/gateway" />
+                  <project path="$PROJECT_DIR$/infrastructure/oauth2-server" />
                 </projects>
               </build>
               <build path="$PROJECT_DIR$/istad-common" name="istad-common">
@@ -27,6 +25,9 @@
                   <project path="$PROJECT_DIR$/istad-common" />
                   <project path="$PROJECT_DIR$/istad-common/istad-common-domain" />
                   <project path="$PROJECT_DIR$/istad-common/istad-common-restapi" />
+                  <project path="$PROJECT_DIR$/istad-common/istad-common-swagger" />
+                  <project path="$PROJECT_DIR$/istad-common/istad-common-webclient" />
+                  <project path="$PROJECT_DIR$/istad-common/istad-common-webflux" />
                 </projects>
               </build>
               <build path="$PROJECT_DIR$/microservices" name="microservices">
@@ -62,6 +63,11 @@
                   <project path="$PROJECT_DIR$/microservices/order-service/order-service-persistence" />
                 </projects>
               </build>
+              <build path="$PROJECT_DIR$/microservices/product-service" name="product-service">
+                <projects>
+                  <project path="$PROJECT_DIR$/microservices/product-service" />
+                </projects>
+              </build>
             </builds>
           </compositeBuild>
         </compositeConfiguration>
@@ -72,9 +78,14 @@
             <option value="$PROJECT_DIR$/build-logic" />
             <option value="$PROJECT_DIR$/infrastructure" />
             <option value="$PROJECT_DIR$/infrastructure/config-server" />
+            <option value="$PROJECT_DIR$/infrastructure/gateway" />
+            <option value="$PROJECT_DIR$/infrastructure/oauth2-server" />
             <option value="$PROJECT_DIR$/istad-common" />
             <option value="$PROJECT_DIR$/istad-common/istad-common-domain" />
             <option value="$PROJECT_DIR$/istad-common/istad-common-restapi" />
+            <option value="$PROJECT_DIR$/istad-common/istad-common-swagger" />
+            <option value="$PROJECT_DIR$/istad-common/istad-common-webclient" />
+            <option value="$PROJECT_DIR$/istad-common/istad-common-webflux" />
             <option value="$PROJECT_DIR$/microservices" />
             <option value="$PROJECT_DIR$/microservices/business-service" />
             <option value="$PROJECT_DIR$/microservices/customer-service" />
@@ -92,6 +103,7 @@
             <option value="$PROJECT_DIR$/microservices/order-service/order-service-domain/order-domain-core" />
             <option value="$PROJECT_DIR$/microservices/order-service/order-service-main" />
             <option value="$PROJECT_DIR$/microservices/order-service/order-service-persistence" />
+            <option value="$PROJECT_DIR$/microservices/product-service" />
           </set>
         </option>
         <option name="myGradleHome" value="" />

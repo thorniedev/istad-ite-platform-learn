@@ -4,6 +4,10 @@ plugins {
 
 dependencies {
 
-    implementation 'org.springframework.cloud:spring-cloud-config-server'
+    implementation libs.spring.cloud.config.server
+
+    implementation libs.spring.vault.core
+
+    implementation libs.spring.boot.starter.actuator
 
 }

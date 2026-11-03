@@ -1,13 +1,11 @@
 package kh.edu.istad.platform.customer.restapi.controller;
 
-import kh.edu.istad.common.domain.valueobject.Money;
-import kh.edu.istad.platform.customer.domain.dto.InitiateCustomerResult;
+import kh.edu.istad.common.domain.exception.DomainException;
 import kh.edu.istad.platform.customer.domain.entity.Customer;
 import kh.edu.istad.platform.customer.domain.usecase.CreateCustomerUseCase;
 import kh.edu.istad.platform.customer.domain.usecase.InitiateCustomerUseCase;
 import kh.edu.istad.platform.customer.domain.usecase.QueryCustomerUseCase;
 import kh.edu.istad.platform.customer.restapi.dto.CreateCustomerRequest;
-import kh.edu.istad.platform.customer.restapi.dto.CustomerInitiateRequest;
 import kh.edu.istad.platform.customer.restapi.dto.CustomerInitiateResponse;
 import kh.edu.istad.platform.customer.restapi.mapper.CustomerWebMapper;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +26,16 @@ public class CustomerController {
 
     @GetMapping
     public Flux<CustomerInitiateResponse> findAll(){
-        return queryCustomerUseCase.findAll().map(customerWebMapper::toResponse);
+
+        return queryCustomerUseCase.findAll()
+                .map(customerWebMapper::toResponse)
+                .onErrorResume(DomainException.class, ex -> {
+                    return Flux.empty();
+                });
+
+        // return queryCustomerUseCase.findAll()
+        //       .map(customerWebMapper::toResponse);
+        // return Flux.error(new DomainException("Error is cool"));
     }
 
     @GetMapping("/query")

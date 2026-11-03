@@ -4,9 +4,17 @@ plugins {
 }
 
 dependencies {
+
     implementation "kh.edu.istad:order-application-service"
-    implementation 'org.springframework.boot:spring-boot-starter-webclient'
+
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
+    implementation libs.spring.boot.starter.webflux
+    implementation libs.reactor.core
+
+    // implementation 'org.springframework.boot:spring-boot-starter-webclient'
+
     implementation 'org.springframework.cloud:spring-cloud-starter-loadbalancer'
     implementation 'com.github.ben-manes.caffeine:caffeine'
-    testImplementation 'io.projectreactor:reactor-test'
+
 }
