@@ -12,7 +12,6 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 public class ProductService {
 
-    // private final Map<String, Product> productRepository = new ConcurrentHashMap<>();
     private final ProductRepository productRepository;
 
     public ProductService(ProductRepository productRepository) {
@@ -37,15 +36,4 @@ public class ProductService {
                 .build();
         return productRepository.save(product);
     }
-
-//    public Product findById(String id) {
-//        return productRepository.get(id);
-//    }
-//
-//    public Product create(String name, double price, int quantity) {
-//        String id = UUID.randomUUID().toString();
-//        Product product = new Product(id, name, price, quantity);
-//        productRepository.put(id, product);
-//        return product;
-//    }
 }

@@ -4,7 +4,6 @@ package kh.edu.istad.platform.order.client.interceptor;
 // generates a correlation ID (or reads an existing one),
 // and attaches it to the gRPC Metadata.
 
-
 import io.grpc.*;
 import lombok.extern.slf4j.Slf4j;
 import net.devh.boot.grpc.client.interceptor.GrpcGlobalClientInterceptor;

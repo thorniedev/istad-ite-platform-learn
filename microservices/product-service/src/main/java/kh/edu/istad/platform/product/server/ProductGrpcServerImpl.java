@@ -38,8 +38,8 @@ public class ProductGrpcServerImpl extends ProductGrpcServiceGrpc.ProductGrpcSer
                 .setQuantity(product.getQuantity())
                 .build();
 
-        responseObserver.onNext(response);
-        responseObserver.onCompleted();
+        responseObserver.onNext(response); //
+        responseObserver.onCompleted(); // end proccess
     }
 
     // Create Product
@@ -60,7 +60,7 @@ public class ProductGrpcServerImpl extends ProductGrpcServiceGrpc.ProductGrpcSer
                 .build();
 
         responseObserver.onNext(response);
-        responseObserver.onCompleted();
+        responseObserver.onCompleted(); //
     }
 
 }

@@ -1,4 +1,4 @@
-package kh.edu.istad.platform.order.client.grpc;
+package kh.edu.istad.platform.order.client.adapter.grpc;
 
 import io.grpc.Status;
 import io.grpc.StatusRuntimeException;
