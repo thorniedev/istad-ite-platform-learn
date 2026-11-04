@@ -12,6 +12,8 @@ import org.springframework.http.MediaType;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -91,7 +93,7 @@ public class AuthorizationServerConfig {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
-    // 4. RSA Key Pair for signing JWTs (/oauth2/jwks)
+    // RSA Key Pair for signing JWTs (/oauth2/jwks)
     @Bean
     public JWKSource<SecurityContext> jwkSource() {
         KeyPair keyPair = generateRsaKey();
@@ -113,12 +115,12 @@ public class AuthorizationServerConfig {
             throw new IllegalStateException(ex);
         }
     }
-    // 5. JwtDecoder Bean (Required for OIDC UserInfo & Client Registration endpoints as documented)
+    // JwtDecoder Bean (Required for OIDC UserInfo & Client Registration endpoints as documented)
     @Bean
     public JwtDecoder jwtDecoder(JWKSource<SecurityContext> jwkSource) {
         return OAuth2AuthorizationServerConfiguration.jwtDecoder(jwkSource);
     }
-    // 6. AuthorizationServerSettings (Required component)
+    // AuthorizationServerSettings (Required component)
     @Bean
     public AuthorizationServerSettings authorizationServerSettings() {
         return AuthorizationServerSettings.builder()

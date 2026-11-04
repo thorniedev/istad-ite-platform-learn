@@ -8,6 +8,12 @@ spring:
           # If running with Consul: http://customer-service
           # If running directly without Consul: http://localhost:9091
           base-url: http://customer-service
+  grpc:
+    client:
+      product-service:
+        address: 'static://localhost:9095'
+        negotiation-type: plaintext
+
 
   security:
     oauth2:
