@@ -2,19 +2,15 @@ server:
   port: 3000
 
 spring:
+  application:
+    name: order-service
+
   http:
     serviceclient:
       customers-service:
-          # If running with Consul: http://customer-service
-          # If running directly without Consul: http://localhost:9091
-          base-url: http://customer-service
-  grpc:
-    client:
-      product-service:
-        address: 'static://localhost:9095'
-        negotiation-type: plaintext
-
-
+        # If running with Consul: http://customer-service
+        # If running directly without Consul: http://localhost:9091
+        base-url: http://customer-service
   security:
     oauth2:
       client:
@@ -30,9 +26,6 @@ spring:
         provider:
           authorization-server:
             issuer-uri: http://localhost:9000
-
-  application:
-    name: order-service
 
   config:
     import: "optional:consul:"
@@ -71,6 +64,12 @@ logging:
   level:
     org.springframework.security.oauth2: DEBUG
     org.springframework.web.reactive.function.client: DEBUG
+
+grpc:
+  client:
+    product-service:
+      address: 'static://localhost:9095'
+      negotiation-type: plaintext
 
 #  liquibase:
 #    enabled: true

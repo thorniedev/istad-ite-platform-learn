@@ -3,7 +3,9 @@ package kh.edu.istad.platform.main;
 import kh.edu.istad.platform.main.config.ServicePropConfig;
 import kh.edu.istad.platform.order.domain.dto.client.CustomerResponse;
 import kh.edu.istad.platform.order.domain.dto.client.QueryCustomerResult;
+import kh.edu.istad.platform.order.domain.dto.client.QueryProductResult;
 import kh.edu.istad.platform.order.domain.port.out.client.CustomerServiceClient;
+import kh.edu.istad.platform.order.domain.port.out.client.ProductServiceClient;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,13 +23,15 @@ import java.util.Map;
 public class WebFluxController {
 
     private final CustomerServiceClient customerServiceClient;
-
+    private final ProductServiceClient productServiceClient;
     private final ServicePropConfig servicePropConfig;
 
-    public WebFluxController(CustomerServiceClient customerServiceClient, ServicePropConfig servicePropConfig) {
+    public WebFluxController(CustomerServiceClient customerServiceClient, ProductServiceClient productServiceClient, ServicePropConfig servicePropConfig) {
         this.customerServiceClient = customerServiceClient;
+        this.productServiceClient = productServiceClient;
         this.servicePropConfig = servicePropConfig;
     }
+
 
 //    @Value("${service.message:Default Message}")
 //    private String serviceMessage;
@@ -38,17 +42,17 @@ public class WebFluxController {
 //    @Value("${service.env:local}")
 //    private String env;
 
-    @GetMapping("/config-check")
-    public Mono< Map<String, String> > getConfig() {
-        return Mono.just(
-                Map.of(
-                        "serviceMessage", servicePropConfig.getMessage(),
-                        "version", servicePropConfig.getVersion(),
-                        "env", servicePropConfig.getEnv(),
-                        "baseUrl", servicePropConfig.getBaseUrl()
-                )
-        );
-    }
+//    @GetMapping("/config-check")
+//    public Mono< Map<String, String> > getConfig() {
+//        return Mono.just(
+//                Map.of(
+//                        "serviceMessage", servicePropConfig.getMessage(),
+//                        "version", servicePropConfig.getVersion(),
+//                        "env", servicePropConfig.getEnv(),
+//                        "baseUrl", servicePropConfig.getBaseUrl()
+//                )
+//        );
+//    }
 
     static class WebFluxControllerService {
 
@@ -80,6 +84,12 @@ public class WebFluxController {
         return Flux.just("A", "B", "C", "D", "E", "F")
                 .log()
                 .delayElements(Duration.ofSeconds(1));
+    }
+
+    // Endpoint calling the gRPC
+    @GetMapping("/api/products/{id}")
+    public Mono<QueryProductResult> getProductById(@PathVariable String id) {
+        return productServiceClient.getProductById(id);
     }
 
 }

@@ -24,8 +24,7 @@ public class ClientDataInitializer {
     public ApplicationRunner initClients(RegisteredClientRepository clientRepository, PasswordEncoder passwordEncoder) {
         return args -> {
 
-            // 1. Internal Microservice Client (M2M / Service-to-Service)
-            // 1. Internal Microservice Client (M2M / Service-to-Service)
+            // Internal Microservice Client (M2M / Service-to-Service)
             if (clientRepository.findByClientId("order-service-client") == null) {
                 RegisteredClient orderClient = RegisteredClient.withId(UUID.randomUUID().toString())
                         .clientId("order-service-client")
@@ -48,7 +47,7 @@ public class ClientDataInitializer {
                 clientRepository.save(orderClient);
             }
 
-            // 2. Frontend Web Client (Next.js / SPA - Authorization Code + PKCE)
+            // Frontend Web Client (Next.js / SPA - Authorization Code + PKCE)
             if (clientRepository.findByClientId("nextjs-client") == null) {
                 RegisteredClient webClient = RegisteredClient.withId(UUID.randomUUID().toString())
                         .clientId("nextjs-client")
