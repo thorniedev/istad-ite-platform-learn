@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package kh.edu.istad.product.v1; // ប្តូរ Package ឱ្យត្រូវជាមួយ Directory path (kh/edu/istad/product/v1)
+
+// សម្រាប់ Java Generator: រក្សាទុក Package Java ចាស់របស់អ្នកដើម្បីកុំឱ្យបាក់កូដ Spring Boot
+option java_multiple_files = true;
+option java_package = "kh.edu.istad.product.v1";
+option java_outer_classname = "ProductProto";
+
+service ProductGrpcService {
+  // Method 1: GetProductById ប្រើ GetProductByIdRequest និង GetProductByIdResponse
+  rpc GetProductById (GetProductByIdRequest) returns (GetProductByIdResponse);
+
+  // Method 2: CreateProduct ប្រើ CreateProductRequest និង CreateProductResponse
+  rpc CreateProduct (CreateProductRequest) returns (CreateProductResponse);
+}
+
+// Messages សម្រាប់ GetProductById
+message GetProductByIdRequest {
+  string product_id = 1;
+}
+message GetProductByIdResponse {
+  string product_id = 1;
+  string name = 2;
+  double price = 3;
+  int32 quantity = 4;
+}
+
+// Messages សម្រាប់ CreateProduct
+message CreateProductRequest {
+  string name = 1;
+  double price = 2;
+  int32 quantity = 3;
+}
+message CreateProductResponse {
+  string product_id = 1;
+  string name = 2;
+  double price = 3;
+  int32 quantity = 4;
+}

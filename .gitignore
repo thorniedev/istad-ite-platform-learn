@@ -46,7 +46,7 @@ project_tree.txt
 .DS_Store
 
 /configuration-repo/
-/istad-grpc-contracts/
+#/istad-grpc-contracts/
 
 # Local environment credentials
 *.local
