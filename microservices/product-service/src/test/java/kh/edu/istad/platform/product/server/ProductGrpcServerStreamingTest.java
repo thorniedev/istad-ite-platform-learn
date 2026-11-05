@@ -1,6 +1,7 @@
 package kh.edu.istad.platform.product.server;
 
 import io.grpc.stub.ServerCallStreamObserver;
+import kh.edu.istad.product.grpc.ProductListResponse;
 import io.grpc.stub.StreamObserver;
 import kh.edu.istad.platform.product.entity.Product;
 import kh.edu.istad.platform.product.service.ProductService;
@@ -18,6 +19,38 @@ import static org.mockito.Mockito.*;
 class ProductGrpcServerStreamingTest {
     private final ProductService service = mock(ProductService.class);
     private final ProductGrpcServerImpl server = new ProductGrpcServerImpl(service);
+
+    @Test
+    @SuppressWarnings("unchecked")
+    void unaryReturnsAllProductsInExactlyOneMessage() {
+        when(service.findAll()).thenReturn(List.of(
+                Product.builder().id("p1").name("Laptop").price(500).quantity(2).build(),
+                Product.builder().id("p2").name("Mouse").price(10).quantity(5).build()));
+        StreamObserver<ProductListResponse> observer = mock(StreamObserver.class);
+
+        server.getAllProducts(ListProductsRequest.getDefaultInstance(), observer);
+
+        var response = ArgumentCaptor.forClass(ProductListResponse.class);
+        var order = inOrder(observer);
+        order.verify(observer).onNext(response.capture());
+        order.verify(observer).onCompleted();
+        order.verifyNoMoreInteractions();
+        assertEquals(List.of("p1", "p2"), response.getValue().getProductsList().stream()
+                .map(ProductResponse::getProductId).toList());
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    void unaryEmptyDatabaseStillReturnsOneMessage() {
+        when(service.findAll()).thenReturn(List.of());
+        StreamObserver<ProductListResponse> observer = mock(StreamObserver.class);
+
+        server.getAllProducts(ListProductsRequest.getDefaultInstance(), observer);
+
+        verify(observer).onNext(ProductListResponse.getDefaultInstance());
+        verify(observer).onCompleted();
+        verifyNoMoreInteractions(observer);
+    }
 
     @Test
     @SuppressWarnings("unchecked")

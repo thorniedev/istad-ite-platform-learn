@@ -1,6 +1,7 @@
 package kh.edu.istad.platform.product.server;
 
 import io.grpc.Status;
+import kh.edu.istad.product.grpc.ProductListResponse;
 import io.grpc.stub.ServerCallStreamObserver;
 import kh.edu.istad.product.grpc.ListProductsRequest;
 import io.grpc.stub.StreamObserver;
@@ -59,6 +60,23 @@ public class ProductGrpcServerImpl extends ProductGrpcServiceGrpc.ProductGrpcSer
                     .build());
         }
         // An empty database produces a successful stream with no messages.
+        observer.onCompleted();
+    }
+
+    // Unlike ListProducts, this sends ONE message containing all products.
+    @Override
+    public void getAllProducts(ListProductsRequest request, StreamObserver<ProductListResponse> observer) {
+        ProductListResponse.Builder response = ProductListResponse.newBuilder();
+        for (Product product : productService.findAll()) {
+            response.addProducts(ProductResponse.newBuilder()
+                    .setProductId(product.getId())
+                    .setName(product.getName())
+                    .setPrice(product.getPrice())
+                    .setQuantity(product.getQuantity())
+                    .build());
+        }
+        // Even an empty database returns one response with an empty products list.
+        observer.onNext(response.build());
         observer.onCompleted();
     }
 

@@ -67,3 +67,26 @@ from `9095` to `3333`. Both Order Service and Product Service now configure
 their product gRPC client address as `static://localhost:3333` in
 `application.yaml`. Order Service HTTP remains on `3000`. No runtime port
 overrides are required.
+
+## Compare unary get-all with server streaming
+
+`GetAllProducts(ListProductsRequest)` returns one `ProductListResponse` containing
+`repeated ProductResponse products`. The server collects products into that message
+and calls `onNext()` once. `ListProducts` instead calls `onNext()` per product.
+Both examples currently load the full database list into memory; use pagination for
+large unary results to avoid oversized messages.
+
+In Postman gRPC, connect to `localhost:3333` without TLS, refresh reflection,
+and invoke `GetAllProducts` with `{}`. Compare its single list response with the
+multiple messages from `ListProducts`.
+
+Through Order Service HTTP:
+
+```sh
+# Unary: one JSON array (empty database returns []).
+curl http://localhost:3000/api/products
+# Streaming: one JSON object per line (empty database returns no messages).
+curl -N -H 'Accept: application/x-ndjson' http://localhost:3000/api/products/stream
+```
+
+Restart Product Service and Order Service after rebuilding to load the new RPC.

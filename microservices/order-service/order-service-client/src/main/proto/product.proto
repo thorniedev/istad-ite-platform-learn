@@ -9,6 +9,8 @@ option java_outer_classname = "ProductProto";
 
 // Service Definition (RPC Methods)
 service ProductGrpcService {
+  // Unary: one response containing the entire product list.
+  rpc GetAllProducts (ListProductsRequest) returns (ProductListResponse);
   rpc GetProductById (ProductRequest) returns (ProductResponse);
   rpc CreateProduct (CreateProductRequest) returns (ProductResponse);
   // One request, followed by zero or more product responses.
@@ -17,6 +19,10 @@ service ProductGrpcService {
 
 // Messages Definition (Data Payloads)
 message ListProductsRequest {}
+
+message ProductListResponse {
+  repeated ProductResponse products = 1;
+}
 
 message ProductRequest {
   string product_id = 1;

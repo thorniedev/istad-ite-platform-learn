@@ -1,6 +1,9 @@
 package kh.edu.istad.platform.order.client.adapter.grpc;
 
 import io.grpc.Status;
+import kh.edu.istad.product.grpc.ListProductsRequest;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 import io.grpc.StatusRuntimeException;
 import kh.edu.istad.platform.order.domain.dto.client.QueryProductResult;
 import kh.edu.istad.platform.order.domain.port.out.client.ProductServiceClient;
@@ -49,6 +52,20 @@ public class ProductGrpcClientAdapter implements ProductServiceClient {
                 .onErrorMap(StatusRuntimeException.class, this::translateGrpcException
                         // new RuntimeException("gRPC call failed: " + ex.getStatus().getDescription(), ex)
                 );
+    }
+
+    @Override
+    public Mono<List<QueryProductResult>> getAllProducts() {
+        // A unary call returns one message; its repeated field contains the list.
+        return Mono.fromCallable(() -> productBlockingStub
+                        .withDeadlineAfter(30, TimeUnit.SECONDS)
+                        .getAllProducts(ListProductsRequest.getDefaultInstance())
+                        .getProductsList().stream()
+                        .map(response -> new QueryProductResult(response.getProductId(),
+                                response.getName(), response.getPrice(), response.getQuantity()))
+                        .toList())
+                .subscribeOn(Schedulers.boundedElastic())
+                .onErrorMap(StatusRuntimeException.class, this::translateGrpcException);
     }
 
     // Exception Translator from gRPC Status -> HTTP Status

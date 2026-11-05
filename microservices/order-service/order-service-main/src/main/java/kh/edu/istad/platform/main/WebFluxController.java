@@ -86,6 +86,12 @@ public class WebFluxController {
                 .delayElements(Duration.ofSeconds(1));
     }
 
+    // Unary get-all: one JSON array backed by one gRPC response.
+    @GetMapping("/api/products")
+    public Mono<java.util.List<QueryProductResult>> getAllProducts() {
+        return productServiceClient.getAllProducts();
+    }
+
     // Endpoint calling the gRPC
     @GetMapping("/api/products/{id}")
     public Mono<QueryProductResult> getProductById(@PathVariable String id) {
