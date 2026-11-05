@@ -69,7 +69,7 @@ grpc:
   client:
     # ឈ្មោះ Client ដែលត្រូវនឹង @GrpcClient
     product-service:
-      address: 'static://localhost:9095'
+      address: 'static://localhost:3333'
       negotiation-type: plaintext
 
 #  liquibase:

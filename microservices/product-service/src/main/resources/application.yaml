@@ -1,5 +1,5 @@
 server:
-  port: 8085  # HTTP MVC port
+  port: 2222  # HTTP MVC port
 
 spring:
   application:
@@ -20,11 +20,11 @@ spring:
 
 grpc:
   server:
-    port: 9095          # Dedicated gRPC Netty port
+    port: 3333          # Dedicated gRPC Netty port
     reflection-service-enabled: true
   client:
     product-service:
-      address: 'static://localhost:9095'
+      address: 'static://localhost:3333'
       negotiation-type: plaintext
 
 

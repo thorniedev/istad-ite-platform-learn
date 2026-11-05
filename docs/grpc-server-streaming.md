@@ -13,7 +13,7 @@ message ListProductsRequest {}
 
 1. Send `GET /api/products/stream` to Order Service.
 2. `ProductStreamController` subscribes to `ProductStreamClient.listProducts()`.
-3. `ProductStreamingGrpcClientAdapter` uses the generated async stub to call Product Service on port 9095.
+3. `ProductStreamingGrpcClientAdapter` uses the generated async stub to call Product Service on port 3333.
 4. `ProductGrpcServerImpl` loads products through `ProductService` and its JPA repository.
 5. The server calls `onNext()` once per product, then `onCompleted()` once.
 6. The client maps each response to `QueryProductResult`. WebFlux writes one JSON object per line using NDJSON.
@@ -26,14 +26,14 @@ response because its HTTP status can no longer change.
 ## Try it
 
 Start the existing database and the dependencies required by your local service
-configuration, then Product Service (HTTP 8085, gRPC 9095) and Order Service (HTTP 3000).
+configuration, then Product Service (HTTP 2222, gRPC 3333) and Order Service (HTTP 3000).
 Create at least two products:
 
 ```sh
-curl -X POST http://localhost:8085/api/v1/products \
+curl -X POST http://localhost:2222/api/v1/products \
   -H 'Content-Type: application/json' \
   -d '{"name":"Laptop","price":500,"quantity":2}'
-curl -X POST http://localhost:8085/api/v1/products \
+curl -X POST http://localhost:2222/api/v1/products \
   -H 'Content-Type: application/json' \
   -d '{"name":"Mouse","price":10,"quantity":5}'
 curl -N -H 'Accept: application/x-ndjson' http://localhost:3000/api/products/stream
@@ -42,7 +42,7 @@ curl -N -H 'Accept: application/x-ndjson' http://localhost:3000/api/products/str
 To call gRPC directly with grpcurl and the enabled server reflection:
 
 ```sh
-grpcurl -plaintext -d '{}' localhost:9095 kh.edu.istad.product.grpc.ProductGrpcService/ListProducts
+grpcurl -plaintext -d '{}' localhost:3333 kh.edu.istad.product.grpc.ProductGrpcService/ListProducts
 ```
 
 Database order is unspecified. There is no artificial delay: small result sets may
@@ -59,3 +59,11 @@ it is not a bounded-memory export for arbitrarily large catalogs.
 Server handler tests cover multiple messages followed by completion, an empty result,
 and stopping sends when the call is cancelled. These tests use a mocked product
 service; a live database and full network round trip require the manual demo above.
+
+## Port configuration update
+
+Product Service HTTP changed from `8085` to `2222`; its gRPC server changed
+from `9095` to `3333`. Both Order Service and Product Service now configure
+their product gRPC client address as `static://localhost:3333` in
+`application.yaml`. Order Service HTTP remains on `3000`. No runtime port
+overrides are required.
