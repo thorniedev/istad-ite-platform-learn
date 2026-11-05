@@ -15,6 +15,8 @@ public class ProductStreamController {
         this.productStreamClient = productStreamClient;
     }
 
+
+//    NDJSON (Newline Delimited JSON) ជា Format ដែលបញ្ជូន JSON Object មួយក្នុងមួយបន្ទាត់។
     @GetMapping(value = "/api/products/stream", produces = MediaType.APPLICATION_NDJSON_VALUE)
     public Flux<QueryProductResult> listProducts() {
         return productStreamClient.listProducts();

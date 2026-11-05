@@ -10,6 +10,7 @@ service ProductGrpcService {
   rpc GetProductById (ProductRequest) returns (ProductResponse);
   rpc CreateProduct (CreateProductRequest) returns (ProductResponse);
   // One request, followed by zero or more product responses.
+  //stream នៅខាងមុខ ProductResponse ប្រាប់ gRPC ថា Server អាចបញ្ជូន Response Messages ច្រើនសម្រាប់ Request តែមួយ។
   rpc ListProducts (ListProductsRequest) returns (stream ProductResponse);
 }
 

@@ -29,6 +29,12 @@ public class ProductGrpcClientAdapter implements ProductServiceClient {
                     ProductRequest request = ProductRequest.newBuilder()
                             .setProductId(productId)
                             .build();
+
+//                    នៅពេលហៅ Method នេះ៖
+//                    1. Client Stub រៀបចំ gRPC Request។
+//                    2. Protobuf Serialize ទិន្នន័យទៅជា Binary Format។
+//                    3. gRPC ផ្ញើ Request ទៅ Product Service តាម HTTP/2។
+//                    4. Client រង់ចាំរហូតដល់ទទួល Response ឬ Error។
                     ProductResponse response = productBlockingStub.getProductById(request);
                     return new QueryProductResult(
                             response.getProductId(),
@@ -37,6 +43,8 @@ public class ProductGrpcClientAdapter implements ProductServiceClient {
                             response.getQuantity()
                     );
                 })
+
+                //boundedElastic() បញ្ជូន Blocking Operation ទៅ Worker Thread ដើម្បីកុំឱ្យ Block WebFlux Event Loop។
                 .subscribeOn(Schedulers.boundedElastic())
                 .onErrorMap(StatusRuntimeException.class, this::translateGrpcException
                         // new RuntimeException("gRPC call failed: " + ex.getStatus().getDescription(), ex)

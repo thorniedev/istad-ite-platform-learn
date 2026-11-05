@@ -67,6 +67,7 @@ logging:
 
 grpc:
   client:
+    # ឈ្មោះ Client ដែលត្រូវនឹង @GrpcClient
     product-service:
       address: 'static://localhost:9095'
       negotiation-type: plaintext
