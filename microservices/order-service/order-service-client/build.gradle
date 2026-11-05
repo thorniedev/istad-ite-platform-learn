@@ -1,15 +1,17 @@
 plugins {
     id 'spring-common-conventions'
     id 'spring-cloud-common-conventions'
-    alias(libs.plugins.protobuf)
+    // alias(libs.plugins.protobuf)
 }
 
 dependencies {
 
     // gRPC Client Starter (Only client needed, NO server starter here)
     implementation libs.grpc.client.spring.boot.starter
-    implementation libs.grpc.protobuf
-    implementation libs.grpc.stub
+    implementation "kh.edu.istad:istad-common-grpc"
+
+    //implementation libs.grpc.protobuf
+    //implementation libs.grpc.stub
 
     implementation "kh.edu.istad:order-application-service"
 
@@ -25,20 +27,20 @@ dependencies {
 
 }
 
-protobuf {
-    protoc {
-        artifact = "com.google.protobuf:protoc:${libs.versions.protobuf.get()}"
-    }
-    plugins {
-        grpc {
-            artifact = "io.grpc:protoc-gen-grpc-java:${libs.versions.grpc.get()}"
-        }
-    }
-    generateProtoTasks {
-        all().each { task ->
-            task.plugins {
-                grpc {}
-            }
-        }
-    }
-}
+//protobuf {
+//    protoc {
+//        artifact = "com.google.protobuf:protoc:${libs.versions.protobuf.get()}"
+//    }
+//    plugins {
+//        grpc {
+//            artifact = "io.grpc:protoc-gen-grpc-java:${libs.versions.grpc.get()}"
+//        }
+//    }
+//    generateProtoTasks {
+//        all().each { task ->
+//            task.plugins {
+//                grpc {}
+//            }
+//        }
+//    }
+//}

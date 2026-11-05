@@ -1,6 +1,6 @@
 plugins {
     id 'spring-boot-common-conventions'
-    alias(libs.plugins.protobuf)
+    // alias(libs.plugins.protobuf)
 }
 
 dependencies {
@@ -9,12 +9,14 @@ dependencies {
 
     // gRPC Spring Boot Starters
     implementation libs.grpc.server.spring.boot.starter
+    implementation libs.grpc.services // Enables reflection
     implementation libs.grpc.client.spring.boot.starter
 
     // Core gRPC & Protobuf libraries
-    implementation libs.grpc.protobuf
-    implementation libs.grpc.stub
-    implementation libs.grpc.services // Enables reflection
+    implementation 'kh.edu.istad:istad-common-grpc'
+    //implementation libs.grpc.protobuf
+    //implementation libs.grpc.stub
+
 
     // spring data
     implementation libs.spring.boot.starter.data.jpa
@@ -24,20 +26,20 @@ dependencies {
     testImplementation libs.grpc.testing
 }
 
-protobuf {
-    protoc {
-        artifact = "com.google.protobuf:protoc:3.25.5"
-    }
-    plugins {
-        grpc {
-            artifact = "io.grpc:protoc-gen-grpc-java:1.68.1"
-        }
-    }
-    generateProtoTasks {
-        all().each { task ->
-            task.plugins {
-                grpc {}
-            }
-        }
-    }
-}
+//protobuf {
+//    protoc {
+//        artifact = "com.google.protobuf:protoc:3.25.5"
+//    }
+//    plugins {
+//        grpc {
+//            artifact = "io.grpc:protoc-gen-grpc-java:1.68.1"
+//        }
+//    }
+//    generateProtoTasks {
+//        all().each { task ->
+//            task.plugins {
+//                grpc {}
+//            }
+//        }
+//    }
+//}

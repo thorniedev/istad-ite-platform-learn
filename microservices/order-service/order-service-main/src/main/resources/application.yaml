@@ -11,6 +11,7 @@ spring:
         # If running with Consul: http://customer-service
         # If running directly without Consul: http://localhost:9091
         base-url: http://customer-service
+
   security:
     oauth2:
       client:

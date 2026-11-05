@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PersistenceUnitSettings">
+    <persistence-units>
+      <persistence-unit moduleName="iam-service.main" name="iam-service.main" framework="JPA" ormUnit="iam-service.main:iam-service.main" />
+    </persistence-units>
+  </component>
+</project>

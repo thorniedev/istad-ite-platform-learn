@@ -28,15 +28,16 @@ public class TokenConfig {
 //                // Customize headers/claims for id_token
 //            }
 
-            var principal = authentication.getPrincipal();
-            if (principal instanceof UserDetails user) {
-                if (OAuth2ParameterNames.ACCESS_TOKEN.equals(context.getTokenType().getValue())) {
-                    context.getClaims()
-                            .claim( claim -> {
-                                claim
-                            });
-                }
-            }
+//            var principal = authentication.getPrincipal();
+//            if (principal instanceof UserDetails user) {
+//                if (OAuth2ParameterNames.ACCESS_TOKEN.equals(context.getTokenType().getValue())) {
+//                    context.getClaims()
+//                            .claim( claim -> {
+//                                claim
+//                            });
+//                }
+//            }
+
         };
     }
 
