@@ -1,6 +1,8 @@
 package kh.edu.istad.platform.product.server;
 
 import io.grpc.Status;
+import io.grpc.stub.ServerCallStreamObserver;
+import kh.edu.istad.product.grpc.ListProductsRequest;
 import io.grpc.stub.StreamObserver;
 import kh.edu.istad.platform.product.entity.Product;
 import kh.edu.istad.platform.product.service.ProductService;
@@ -40,6 +42,24 @@ public class ProductGrpcServerImpl extends ProductGrpcServiceGrpc.ProductGrpcSer
 
         responseObserver.onNext(response); //
         responseObserver.onCompleted(); // end proccess
+    }
+
+    // Unary request -> multiple response messages -> completion.
+    @Override
+    public void listProducts(ListProductsRequest request, StreamObserver<ProductResponse> observer) {
+        for (Product product : productService.findAll()) {
+            if (observer instanceof ServerCallStreamObserver<?> call && call.isCancelled()) {
+                return;
+            }
+            observer.onNext(ProductResponse.newBuilder()
+                    .setProductId(product.getId())
+                    .setName(product.getName())
+                    .setPrice(product.getPrice())
+                    .setQuantity(product.getQuantity())
+                    .build());
+        }
+        // An empty database produces a successful stream with no messages.
+        observer.onCompleted();
     }
 
     // Create Product

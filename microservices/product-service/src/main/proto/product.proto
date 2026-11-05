@@ -9,7 +9,11 @@ option java_outer_classname = "ProductProto"; // ឈ្មោះ Class កណ្
 service ProductGrpcService {
   rpc GetProductById (ProductRequest) returns (ProductResponse);
   rpc CreateProduct (CreateProductRequest) returns (ProductResponse);
+  // One request, followed by zero or more product responses.
+  rpc ListProducts (ListProductsRequest) returns (stream ProductResponse);
 }
+
+message ListProductsRequest {}
 
 message ProductRequest {
   string product_id = 1;

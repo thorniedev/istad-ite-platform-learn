@@ -19,6 +19,11 @@ public class ProductService {
     }
 
     @Transactional(readOnly = true)
+    public java.util.List<Product> findAll() {
+        return productRepository.findAll();
+    }
+
+    @Transactional(readOnly = true)
     public Product findByID(String id){
         return productRepository.findById(id).orElse(null);
     }
