@@ -1,9 +1,10 @@
 package kh.edu.istad.platform.product.controller;
 
+import build.buf.gen.kh.edu.istad.product.v1.CreateProductResponse;
+import build.buf.gen.kh.edu.istad.product.v1.GetProductByIdResponse;
 import kh.edu.istad.platform.product.client.ProductGrpcClient;
 import kh.edu.istad.platform.product.dto.CreateProductDto;
 import kh.edu.istad.platform.product.dto.ProductResponseDto;
-import kh.edu.istad.product.grpc.ProductResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,7 @@ public class ProductController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ProductResponseDto createProduct(@RequestBody CreateProductDto createProductDto){
-        ProductResponse grpcResponse = productGrpcClient.createProduct(
+        CreateProductResponse grpcResponse = productGrpcClient.createProduct(
                 createProductDto.name(),
                 createProductDto.price(),
                 createProductDto.quantity()
@@ -29,7 +30,7 @@ public class ProductController {
 
     @GetMapping("/{id}")
     public ProductResponseDto getProductById(@PathVariable String id) {
-        ProductResponse grpcResponse = productGrpcClient.getProductById(id);
+        GetProductByIdResponse grpcResponse = productGrpcClient.getProductById(id);
         return ProductResponseDto.fromGrpcResponse(grpcResponse);
     }
 

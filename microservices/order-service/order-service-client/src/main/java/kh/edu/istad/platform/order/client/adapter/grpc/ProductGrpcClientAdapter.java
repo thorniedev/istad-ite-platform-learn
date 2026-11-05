@@ -1,16 +1,17 @@
 package kh.edu.istad.platform.order.client.adapter.grpc;
 
+import build.buf.gen.kh.edu.istad.product.v1.GetProductByIdRequest;
+import build.buf.gen.kh.edu.istad.product.v1.GetProductByIdResponse;
+import build.buf.gen.kh.edu.istad.product.v1.ProductGrpcServiceGrpc;
 import io.grpc.Status;
 import io.grpc.StatusRuntimeException;
 import kh.edu.istad.platform.order.domain.dto.client.QueryProductResult;
 import kh.edu.istad.platform.order.domain.port.out.client.ProductServiceClient;
-import kh.edu.istad.product.grpc.ProductRequest;
-import kh.edu.istad.product.grpc.ProductResponse;
 import lombok.extern.slf4j.Slf4j;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import kh.edu.istad.product.grpc.ProductGrpcServiceGrpc;
+
 import org.springframework.web.server.ResponseStatusException;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
@@ -26,10 +27,14 @@ public class ProductGrpcClientAdapter implements ProductServiceClient {
     @Override
     public Mono<QueryProductResult> getProductById(String productId) {
         return Mono.fromCallable(() -> {
-                    ProductRequest request = ProductRequest.newBuilder()
+                    // Build request using Buf generated class
+                    GetProductByIdRequest request = GetProductByIdRequest.newBuilder()
                             .setProductId(productId)
                             .build();
-                    ProductResponse response = productBlockingStub.getProductById(request);
+                    log.info("Dispatching gRPC call to product-service for ID: {}", productId);
+
+                    // Invoke the blocking stub
+                    GetProductByIdResponse response = productBlockingStub.getProductById(request);
                     return new QueryProductResult(
                             response.getProductId(),
                             response.getName(),

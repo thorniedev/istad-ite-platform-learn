@@ -1,4 +1,4 @@
-package kh.edu.istad.platform.iam.repository;
+package kh.edu.istad.platform.iam.feature.permission;
 
 import kh.edu.istad.platform.iam.domain.Permission;
 import org.springframework.data.jpa.repository.JpaRepository;

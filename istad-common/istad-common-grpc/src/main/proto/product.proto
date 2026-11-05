@@ -15,6 +15,11 @@ message ProductRequest {
   string product_id = 1;
 }
 
+message ProductRequest2 {
+  string product_id = 1;
+  double price = 2;
+}
+
 message CreateProductRequest {
   string name = 1;
   double price = 2;

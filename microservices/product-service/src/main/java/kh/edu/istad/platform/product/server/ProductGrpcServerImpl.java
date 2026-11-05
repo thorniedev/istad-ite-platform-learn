@@ -4,10 +4,19 @@ import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import kh.edu.istad.platform.product.entity.Product;
 import kh.edu.istad.platform.product.service.ProductService;
-import kh.edu.istad.product.grpc.CreateProductRequest;
-import kh.edu.istad.product.grpc.ProductGrpcServiceGrpc;
-import kh.edu.istad.product.grpc.ProductRequest;
-import kh.edu.istad.product.grpc.ProductResponse;
+
+// === Old version
+//import kh.edu.istad.product.grpc.CreateProductRequest;
+//import kh.edu.istad.product.grpc.ProductGrpcServiceGrpc;
+//import kh.edu.istad.product.grpc.ProductRequest;
+//import kh.edu.istad.product.grpc.ProductResponse;
+
+import build.buf.gen.kh.edu.istad.product.v1.CreateProductRequest;
+import build.buf.gen.kh.edu.istad.product.v1.CreateProductResponse;
+import build.buf.gen.kh.edu.istad.product.v1.GetProductByIdRequest;
+import build.buf.gen.kh.edu.istad.product.v1.GetProductByIdResponse;
+import build.buf.gen.kh.edu.istad.product.v1.ProductGrpcServiceGrpc;
+
 import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.server.service.GrpcService;
 
@@ -18,7 +27,7 @@ public class ProductGrpcServerImpl extends ProductGrpcServiceGrpc.ProductGrpcSer
     private final ProductService productService;
 
     @Override
-    public void getProductById(ProductRequest request, StreamObserver<ProductResponse> responseObserver) {
+    public void getProductById(GetProductByIdRequest request, StreamObserver<GetProductByIdResponse> responseObserver) {
 
         Product product = productService.findByID(request.getProductId());
 
@@ -31,7 +40,7 @@ public class ProductGrpcServerImpl extends ProductGrpcServiceGrpc.ProductGrpcSer
             return;
         }
 
-        ProductResponse response = ProductResponse.newBuilder()
+        GetProductByIdResponse response = GetProductByIdResponse.newBuilder()
                 .setProductId(product.getId())
                 .setName(product.getName())
                 .setPrice(product.getPrice())
@@ -44,7 +53,7 @@ public class ProductGrpcServerImpl extends ProductGrpcServiceGrpc.ProductGrpcSer
 
     // Create Product
     @Override
-    public void createProduct(CreateProductRequest request, StreamObserver<ProductResponse> responseObserver) {
+    public void createProduct(CreateProductRequest request, StreamObserver<CreateProductResponse> responseObserver) {
 
         Product product = productService.create(
                 request.getName(),
@@ -52,7 +61,7 @@ public class ProductGrpcServerImpl extends ProductGrpcServiceGrpc.ProductGrpcSer
                 request.getQuantity()
         );
 
-        ProductResponse response = ProductResponse.newBuilder()
+        CreateProductResponse response = CreateProductResponse.newBuilder()
                 .setProductId(product.getId())
                 .setName(product.getName())
                 .setPrice(product.getPrice())

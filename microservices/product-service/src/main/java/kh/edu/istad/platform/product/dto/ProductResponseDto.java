@@ -1,6 +1,7 @@
 package kh.edu.istad.platform.product.dto;
 
-import kh.edu.istad.product.grpc.ProductResponse;
+import build.buf.gen.kh.edu.istad.product.v1.CreateProductResponse;
+import build.buf.gen.kh.edu.istad.product.v1.GetProductByIdResponse;
 
 public record ProductResponseDto(
         String id,
@@ -8,7 +9,16 @@ public record ProductResponseDto(
         double price,
         int quantity
 ) {
-    public static ProductResponseDto fromGrpcResponse(ProductResponse response) {
+    public static ProductResponseDto fromGrpcResponse(GetProductByIdResponse response) {
+        return new ProductResponseDto(
+                response.getProductId(),
+                response.getName(),
+                response.getPrice(),
+                response.getQuantity()
+        );
+    }
+
+    public static ProductResponseDto fromGrpcResponse(CreateProductResponse response) {
         return new ProductResponseDto(
                 response.getProductId(),
                 response.getName(),

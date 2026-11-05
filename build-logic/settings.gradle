@@ -8,6 +8,10 @@ dependencyResolutionManagement {
     repositories {
         gradlePluginPortal()
         mavenCentral()
+        maven {
+            name = 'buf'
+            url = 'https://buf.build/gen/maven'
+        }
     }
     versionCatalogs {
         libs{

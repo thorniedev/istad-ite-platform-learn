@@ -84,42 +84,27 @@ public class AuthorizationServerConfig {
             throws Exception {
         http
                 .authorizeHttpRequests((authorize) -> authorize
+                        .requestMatchers("/login", "/oauth2/**", "/css/**", "/js/**", "/images/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 // Form login handles the redirect to the login page from the
-                // authorization server filter chain
-                .formLogin(Customizer.withDefaults());
+
+                // .oauth2Login(Customizer.withDefaults())
+                .oauth2Login( oauth2 -> oauth2
+                        .loginPage("/login")
+                        .permitAll()
+                )
+                .oauth2Client(Customizer.withDefaults())
+                .formLogin(form -> form
+                        .loginPage("/login")        // GET /login (Controller renders login.html)
+                        .loginProcessingUrl("/login")   // POST /login (handled by Spring Security)
+                        .usernameParameter("username")   // matches <input name="username">
+                        .passwordParameter("password")   // matches <input name="password">
+                        .permitAll()
+                );
 
         return http.build();
     }
-
-//    @Bean
-//    public UserDetailsService userDetailsService() {
-//        return identity -> {
-//          return null;
-//        };
-//    }
-
-//    @Bean
-//    public UserDetailsService userDetailsService() {
-//        UserDetails userDetails = User.withDefaultPasswordEncoder()
-//                .username("user")
-//                .password("password")
-//                .roles("USER")
-//                .build();
-//
-//        return new InMemoryUserDetailsManager(userDetails);
-//    }
-
-//    @Bean
-//    public OAuth2AuthorizationService  oAuth2AuthorizationService() {
-//        return new JdbcOAuth2AuthorizationService(jdbcTemplate, registeredClientRepository());
-//    }
-//
-//    @Bean
-//    public OAuth2AuthorizationConsentService oAuth2AuthorizationConsentService() {
-//        return new InMemoryOAuth2AuthorizationConsentService()
-//    }
 
     @Bean
     public OAuth2AuthorizationService oAuth2AuthorizationService(
@@ -134,11 +119,6 @@ public class AuthorizationServerConfig {
             RegisteredClientRepository registeredClientRepository) {
         return new JdbcOAuth2AuthorizationConsentService(jdbcTemplate, registeredClientRepository);
     }
-
-//    @Bean
-//    public PasswordEncoder passwordEncoder() {
-//        return new BCryptPasswordEncoder();
-//    }
 
     @Bean
     public JWKSource<SecurityContext> jwkSource() {
@@ -176,7 +156,7 @@ public class AuthorizationServerConfig {
     @Bean
     public AuthorizationServerSettings authorizationServerSettings() {
         return AuthorizationServerSettings.builder()
-                .issuer("http://localhost:8090")
+                .issuer("http://localhost:9000")
                 .build();
     }
 

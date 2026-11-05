@@ -3,6 +3,14 @@ plugins {
     id 'spring-cloud-common-conventions'
 }
 
+repositories {
+    mavenCentral()
+    maven {
+        name = 'buf'
+        url 'https://buf.build/gen/maven'
+    }
+}
+
 dependencies {
 
     implementation "kh.edu.istad:istad-common-swagger"

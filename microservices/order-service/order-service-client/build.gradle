@@ -3,44 +3,36 @@ plugins {
     id 'spring-cloud-common-conventions'
     // alias(libs.plugins.protobuf)
 }
+repositories {
+    mavenCentral()
+    maven {
+        name = 'buf'
+        url 'https://buf.build/gen/maven'
+    }
+}
 
 dependencies {
 
-    // gRPC Client Starter (Only client needed, NO server starter here)
+    // gRPC Client Starter
     implementation libs.grpc.client.spring.boot.starter
-    implementation "kh.edu.istad:istad-common-grpc"
 
-    //implementation libs.grpc.protobuf
-    //implementation libs.grpc.stub
+    // Force Protobuf Runtime to match Buf's 4.36.2 gencode:
+    implementation 'com.google.protobuf:protobuf-java:4.36.2'
+
+    // Buf BSR Data Models & gRPC Stubs:
+    // Protobuf Data Models (សារ Messages & Builders)
+    implementation('build.buf.gen:chanthorndev-buf_istad-platform_protocolbuffers_java:36.2.0.1.20261105173439.7b9a55c953bf')
+
+    // gRPC Service Stubs (Server Base Class & Client Stubs)
+    implementation('build.buf.gen:chanthorndev-buf_istad-platform_grpc_java:1.85.1.1.20261105173439.7b9a55c953bf')
+
 
     implementation "kh.edu.istad:order-application-service"
-
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
-
     implementation libs.spring.boot.starter.webflux
     implementation libs.reactor.core
-
     // implementation 'org.springframework.boot:spring-boot-starter-webclient'
-
     implementation 'org.springframework.cloud:spring-cloud-starter-loadbalancer'
     implementation 'com.github.ben-manes.caffeine:caffeine'
 
 }
-
-//protobuf {
-//    protoc {
-//        artifact = "com.google.protobuf:protoc:${libs.versions.protobuf.get()}"
-//    }
-//    plugins {
-//        grpc {
-//            artifact = "io.grpc:protoc-gen-grpc-java:${libs.versions.grpc.get()}"
-//        }
-//    }
-//    generateProtoTasks {
-//        all().each { task ->
-//            task.plugins {
-//                grpc {}
-//            }
-//        }
-//    }
-//}
