@@ -22,7 +22,7 @@ dependencies {
     // Force Protobuf Runtime to match Buf's 4.36.2 gencode:
     implementation 'com.google.protobuf:protobuf-java:4.36.2'
 
-    // Protobuf Data Models (សារ Messages & Builders)
+    // Protobuf Data Models ( Messages & Builders)
     implementation('build.buf.gen:chanthorndev-buf_istad-platform_protocolbuffers_java:36.2.0.1.20261105173439.7b9a55c953bf')
 
     // gRPC Service Stubs (Server Base Class & Client Stubs)

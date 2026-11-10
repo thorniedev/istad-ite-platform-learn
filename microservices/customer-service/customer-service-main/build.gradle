@@ -5,6 +5,12 @@ plugins {
 
 dependencies {
 
+    implementation 'kh.edu.istad:customer-domain-core'
+    implementation 'kh.edu.istad:customer-application-service'
+    implementation 'kh.edu.istad:customer-service-message'
+    implementation 'kh.edu.istad:customer-service-persistence'
+    implementation 'kh.edu.istad:customer-service-restapi'
+
     //
     implementation "kh.edu.istad:istad-common-swagger"
 
@@ -13,11 +19,6 @@ dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter-consul-discovery'
     implementation 'org.springframework.cloud:spring-cloud-starter-consul-config'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    implementation 'kh.edu.istad:customer-domain-core'
-    implementation 'kh.edu.istad:customer-application-service'
-    implementation 'kh.edu.istad:customer-service-message'
-    implementation 'kh.edu.istad:customer-service-persistence'
-    implementation 'kh.edu.istad:customer-service-restapi'
 
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation 'com.github.ben-manes.caffeine:caffeine'

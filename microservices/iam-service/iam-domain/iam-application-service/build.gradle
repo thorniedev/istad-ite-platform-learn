@@ -1,0 +1,11 @@
+plugins {
+    id 'java-common-conventions'
+}
+
+dependencies {
+
+    api project(':iam-domain:iam-domain-core')
+
+    compileOnly 'org.projectlombok:lombok:1.18.40'
+    annotationProcessor 'org.projectlombok:lombok:1.18.40'
+}

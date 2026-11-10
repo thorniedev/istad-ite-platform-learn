@@ -1,0 +1,16 @@
+plugins {
+    id 'spring-common-conventions'
+}
+
+dependencies {
+
+    implementation project(':iam-domain:iam-application-service')
+
+    // Spring Data JPA & Database
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.liquibase:liquibase-core'
+    runtimeOnly 'org.postgresql:postgresql'
+
+    // JSONB support for Identity attributes in Hibernate 6
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
+}

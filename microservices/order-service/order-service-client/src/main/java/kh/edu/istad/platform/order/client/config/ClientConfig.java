@@ -48,7 +48,7 @@ public class ClientConfig {
         // Create the WebClient OAuth2 filter
         var oauthoFilter = new ServerOAuth2AuthorizedClientExchangeFilterFunction(authorizedClientManager);
         // Uses the registration ID defined in application.yaml:
-        oauthoFilter.setDefaultClientRegistrationId("customer-client");
+        oauthoFilter.setDefaultClientRegistrationId("order-client");
 
         // Attach the filter to the "customer-service" group
         return groups -> {
@@ -68,7 +68,14 @@ public class ClientConfig {
 
             groups.filterByName("customer-service")
                     .forEachClient((group, clientBuilder ) -> {
-                        clientBuilder.filter(oauthoFilter);
+                        clientBuilder
+                                // .baseUrl("http://customer-service") // Error 500
+                                .baseUrl("http://localhost:9091") // port customer-service work
+                                .filter(oauthoFilter)
+                                .defaultStatusHandler(
+                                        HttpStatusCode::isError,
+                                        response -> response.createException()
+                                );
                     });
         };
     }

@@ -5,10 +5,10 @@ plugins {
 
 dependencies {
 
-    // API dependency: provides DomainException and base domain models downstream
+    // API dependency: provides DomainException and base application models downstream
     api project(':istad-common-domain')
 
-    // implementation 'kh.edu.istad:istad-common-domain'
+    // implementation 'kh.edu.istad:istad-common-application'
 
     // Reactive WebFlux starter
     api libs.spring.boot.starter.webflux

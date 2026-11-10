@@ -7,7 +7,7 @@ spring:
 
   http:
     serviceclient:
-      customers-service:
+      customer-service:
         # If running with Consul: http://customer-service
         # If running directly without Consul: http://localhost:9091
         base-url: http://customer-service
@@ -16,17 +16,16 @@ spring:
     oauth2:
       client:
         registration:
-          customer-client:
-            provider: authorization-server
+          order-client:
             client-id: order-service-client
-            client-secret: secret123
+            client-secret: orderSecret123
             authorization-grant-type: client_credentials
             scope:
               - customer.read
               - customer.write
         provider:
-          authorization-server:
-            issuer-uri: http://localhost:9000
+          order-client:
+            token-uri: http://localhost:9000/oauth2/token
 
   config:
     import: "optional:consul:"
@@ -52,7 +51,7 @@ spring:
         enabled: true
         format: yaml
         watch:
-          enabled: true
+          enabled: false
           delay: 5000
           wait-time: 15
 
@@ -60,6 +59,15 @@ spring:
     url: r2dbc:postgresql://localhost:9543/order_db
     username: iteuser
     password: qwerqwer
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info
+  endpoint:
+    health:
+      show-details: always
 
 logging:
   level:

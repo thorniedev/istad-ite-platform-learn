@@ -23,7 +23,7 @@ public class InitiateCustomerUseCase {
         log.info("initiate customer usecase: {}", command);
         customerRepository.save(null);
         // validate by load data from persistence (output port)
-        // invoke domain logic (called domain service)
+        // invoke application logic (called application service)
         // customerDomainService.initiateCustomer(customer);
         // save data into database (output port)
         // customerRepository.save();

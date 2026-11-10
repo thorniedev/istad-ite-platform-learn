@@ -84,7 +84,7 @@ public class ClientRegistrationController {
                         .accessTokenFormat(OAuth2TokenFormat.SELF_CONTAINED)
                         .build());
 
-        // Assign domain scopes (e.g., payment.read, product.write)
+        // Assign application scopes (e.g., payment.read, product.write)
         if (request.scopes() != null) {
             request.scopes().forEach(builder::scope);
         }

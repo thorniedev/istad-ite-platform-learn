@@ -3,6 +3,7 @@ plugins {
 }
 
 dependencies {
-    implementation 'io.projectreactor:reactor-core'
     api 'kh.edu.istad:customer-domain-core'
+
+    implementation 'io.projectreactor:reactor-core'
 }

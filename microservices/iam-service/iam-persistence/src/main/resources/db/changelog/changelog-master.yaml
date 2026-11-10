@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/ddl/001-create-users-table.sql
+  - include:
+      file: db/changelog/ddl/002-create-roles-and-permissions-tables.sql
+  - include:
+      file: db/changelog/ddl/003-create-identities-table.sql
+  - include:
+      file: db/changelog/ddl/004-create-audited-assignments-tables.sql
+  - include:
+      file: db/changelog/data/005-seed-roles-and-permissions.sql
+  - include:
+      file: db/changelog/ddl/006-create-oauth2-authorization-tables.sql

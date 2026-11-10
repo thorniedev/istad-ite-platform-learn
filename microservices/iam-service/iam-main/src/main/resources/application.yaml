@@ -1,0 +1,67 @@
+server:
+  port: 9000
+
+spring:
+  application:
+    name: iam-service
+  security:
+    oauth2:
+      authorizationserver:
+        issuer: ${AUTH_SERVER_ISSUER:http://localhost:9000}
+      client:
+        registration:
+          google:
+            provider: google
+            client-id: ${GOOGLE_CLIENT_ID}
+            client-secret: ${GOOGLE_CLIENT_SECRET}
+            scope:
+              - openid
+              - profile
+              - email
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+          github:
+            provider: github
+            client-id: ${GITHUB_CLIENT_ID}
+            client-secret: ${GITHUB_CLIENT_SECRET}
+            scope:
+              - openid
+              - profile
+              - email
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+
+
+  datasource:
+    url: jdbc:postgresql://localhost:9543/iam-service
+    username: iteuser
+    password: qwerqwer
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+
+jpa:
+  hibernate:
+    ddl-auto: validate
+  open-in-view: false
+  show-sql: false
+  properties:
+    hibernate:
+      format_sql: false
+
+  liquibase:
+    change-log: classpath:db/changelog/changelog-master.yaml
+    enabled: true
+
+  messages:
+    basename: messages
+    encoding: UTF-8
+gg:
+  jte:
+    development-mode: ${JTE_DEV_MODE:true}
+    template-location: microservices/iam-service/iam-web/src/main/jte
+
+logging:
+  level:
+    root: INFO
+    kh.edu.istad.platform.iam: DEBUG
+    org.springframework.security: INFO

@@ -1,0 +1,24 @@
+plugins {
+    id 'spring-common-conventions'
+}
+
+group = 'kh.edu.istad'
+version = 'unspecified'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation project(':iam-domain:iam-application-service')
+
+    // Web, Validation & Security
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+}
+
+test {
+    useJUnitPlatform()
+}

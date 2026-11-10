@@ -18,9 +18,11 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 
     implementation 'kh.edu.istad:order-domain-core'
-    implementation 'kh.edu.istad:order-service-client'
     implementation 'kh.edu.istad:order-application-service'
+    implementation 'kh.edu.istad:order-service-client'
     implementation 'kh.edu.istad:order-service-persistence'
+
+    implementation 'com.google.protobuf:protobuf-java:4.36.2'
 
     // Schema Migration
     implementation libs.spring.boot.starter.liquibase

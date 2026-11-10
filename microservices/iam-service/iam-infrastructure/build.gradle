@@ -1,0 +1,17 @@
+plugins {
+    id 'spring-common-conventions'
+}
+
+dependencies {
+
+    implementation project(':iam-domain:iam-application-service')
+
+    // Spring Authorization Server and Security
+    implementation 'org.springframework.boot:spring-boot-starter-security-oauth2-authorization-server'
+    implementation 'org.springframework.boot:spring-boot-starter-security-oauth2-client'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+
+    // PostgresSQL and Jackson for OAuth2 Jackson Modules
+    runtimeOnly 'org.postgresql:postgresql'
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
+}

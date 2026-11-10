@@ -38,7 +38,7 @@ public class Order extends AggregateRoot<OrderId> {
         return new Builder();
     }
 
-    // ------- start domain logic -------- //
+    // ------- start application logic -------- //
 
     /**
      * Initialize order
@@ -114,7 +114,7 @@ public class Order extends AggregateRoot<OrderId> {
         }
     }
 
-    // ------- end domain logic -------- //
+    // ------- end application logic -------- //
 
     /**
      * Validate order data

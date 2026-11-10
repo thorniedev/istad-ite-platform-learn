@@ -1,0 +1,9 @@
+plugins {
+    id 'java-common-conventions'
+}
+
+dependencies {
+    compileOnly 'org.projectlombok:lombok:1.18.40'
+    annotationProcessor 'org.projectlombok:lombok:1.18.40'
+
+}
